@@ -29,4 +29,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relacionamento 1 para 1: Um usuário pode ter um registro de Aluno (ATV 19).
+     */
+    public function aluno()
+    {
+        return $this->hasOne(Aluno::class, 'user_id');
+    }
 }

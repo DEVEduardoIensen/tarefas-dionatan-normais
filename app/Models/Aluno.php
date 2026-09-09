@@ -18,8 +18,17 @@ class Aluno extends Model
         'email',
         'curso',
         'curso_id',
+        'user_id',
         'data_nascimento',
     ];
+
+    /**
+     * Relacionamento 1 para 1 inverso: O aluno pertence a um usuário do sistema (ATV 19).
+     */
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     /**
      * Relacionamento N para 1: O aluno pertence a um curso (ATV 17).
