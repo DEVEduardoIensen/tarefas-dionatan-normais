@@ -3,58 +3,78 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Aluno;
 
 class AlunoController extends Controller
 {
-    // ATV 4: Implementação dos 7 métodos principais de CRUD
+    // TEMA 7 / ATV 13: CRUD completo com Aluno
 
-    // 1. Listar todos os alunos
+    // 1. Listar todos os alunos do banco
     public function index()
     {
-        // Dados de exemplo para demonstrar @if e @foreach nas views
-        $alunos = [
-            ['id' => 1, 'nome' => 'Ana Silva', 'curso' => 'Engenharia de Software'],
-            ['id' => 2, 'nome' => 'Carlos Santos', 'curso' => 'Análise e Desenvolvimento de Sistemas'],
-            ['id' => 3, 'nome' => 'Beatriz Lima', 'curso' => 'Ciência da Computação'],
-        ];
-
+        $alunos = Aluno::all();
         return view('alunos.index', compact('alunos'));
     }
 
-    // 2. Formulário para criar novo aluno
+    // 2. Exibir o formulário de cadastro de aluno
     public function create()
     {
         return view('alunos.create');
     }
 
-    // 3. Salvar novo aluno no banco de dados
+    // 3. Salvar um novo aluno no banco
     public function store(Request $request)
     {
-        return 'Processando cadastro do aluno (store)';
+        $dadosValidados = $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:alunos,email',
+            'curso' => 'required|string|max:255',
+            'data_nascimento' => 'nullable|date',
+        ]);
+
+        Aluno::create($dadosValidados);
+
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
     }
 
     // 4. Exibir detalhes de um aluno específico
     public function show(string $id)
     {
-        return view('alunos.show', ['id' => $id]);
+        $aluno = Aluno::findOrFail($id);
+        return view('alunos.show', compact('aluno'));
     }
 
-    // 5. Formulário para editar um aluno existente
+    // 5. Exibir o formulário de edição de um aluno
     public function edit(string $id)
     {
-        return view('alunos.edit', ['id' => $id]);
+        $aluno = Aluno::findOrFail($id);
+        return view('alunos.edit', compact('aluno'));
     }
 
-    // 6. Atualizar os dados do aluno no banco de dados
+    // 6. Atualizar os dados do aluno no banco
     public function update(Request $request, string $id)
     {
-        return "Atualizando dados do Aluno ID: {$id} (update)";
+        $aluno = Aluno::findOrFail($id);
+
+        $dadosValidados = $request->validate([
+            'nome' => 'required|string|max:255',
+            'email' => 'required|email|unique:alunos,email,' . $aluno->id,
+            'curso' => 'required|string|max:255',
+            'data_nascimento' => 'nullable|date',
+        ]);
+
+        $aluno->update($dadosValidados);
+
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno atualizado com sucesso!');
     }
 
-    // 7. Excluir um aluno do banco de dados
+    // 7. Excluir um aluno do banco
     public function destroy(string $id)
     {
-        return "Excluindo Aluno ID: {$id} (destroy)";
+        $aluno = Aluno::findOrFail($id);
+        $aluno->delete();
+
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno excluído com sucesso!');
     }
 }
 
