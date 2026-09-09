@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Alunos</title>
-</head>
-<body>
-    <h1>Lista de Alunos</h1>
-    <p>Visualização da lista principal de alunos cadastrados.</p>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('title', 'Lista de Alunos')
+
+@section('content')
+    <h2>Alunos Cadastrados</h2>
+    <p>Aqui você pode visualizar todos os alunos matriculados.</p>
+    <a href="/alunos/create" class="btn">Cadastrar Novo Aluno</a>
+@endsection

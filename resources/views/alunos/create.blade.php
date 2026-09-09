@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Aluno</title>
-</head>
-<body>
-    <h1>Cadastrar Novo Aluno</h1>
-    <p>Formulário para cadastrar um novo aluno.</p>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('title', 'Cadastrar Aluno')
+
+@section('content')
+    <h2>Novo Cadastro</h2>
+    <p>Preencha os dados do novo aluno para realizar a matrícula.</p>
+    <a href="/alunos" class="btn">Voltar para a Lista</a>
+@endsection
