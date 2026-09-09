@@ -4,63 +4,46 @@ namespace App\Policies;
 
 use App\Models\Aluno;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AlunoPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Qualquer usuário (mesmo visitante) pode visualizar a lista de alunos.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Qualquer usuário pode visualizar os detalhes de um aluno.
      */
-    public function view(User $user, Aluno $aluno): bool
+    public function view(?User $user, Aluno $aluno): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can create models.
+     * ATV 23: Apenas Admin pode cadastrar novo Aluno.
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
-     * Determine whether the user can update the model.
+     * ATV 23: Professor e Admin podem editar Aluno.
      */
     public function update(User $user, Aluno $aluno): bool
     {
-        return false;
+        return $user->isAdmin() || $user->isProfessor();
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * ATV 23: Apenas Admin pode excluir Aluno.
      */
     public function delete(User $user, Aluno $aluno): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Aluno $aluno): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Aluno $aluno): bool
-    {
-        return false;
+        return $user->isAdmin();
     }
 }
