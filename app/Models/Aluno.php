@@ -17,8 +17,17 @@ class Aluno extends Model
         'nome',
         'email',
         'curso',
+        'curso_id',
         'data_nascimento',
     ];
+
+    /**
+     * Relacionamento N para 1: O aluno pertence a um curso (ATV 17).
+     */
+    public function cursoRelacionado()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id');
+    }
 
     // ATV 11: Consultas no Eloquent
 
