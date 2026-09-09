@@ -19,3 +19,17 @@ Route::get('/contato', function () {
     return 'Página de Contato: Entre em contato conosco';
 });
 
+// ATV 2: Rotas com parâmetro retornando texto
+Route::get('/produto/{id}', function ($id) {
+    return "Visualizando Produto com ID: {$id}";
+});
+
+Route::get('/categoria/{id}', function ($id) {
+    return "Visualizando Categoria com ID: {$id}";
+});
+
+Route::get('/usuario/{id}', function ($id) {
+    return "Visualizando Usuário com ID: {$id}";
+});
+
+
