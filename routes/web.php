@@ -80,4 +80,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// TEMA 11 / ATV 21: Rotas protegidas pelo Middleware VerificarPerfil
+Route::middleware(['auth', 'perfil:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return 'Painel Administrativo: Acesso exclusivo para usuários com perfil de Administrador.';
+    })->name('admin.painel');
+});
+
+Route::middleware(['auth', 'perfil:professor,admin'])->group(function () {
+    Route::get('/professor', function () {
+        return 'Área do Professor: Acesso permitido para Professores e Administradores.';
+    })->name('professor.area');
+});
+
 require __DIR__.'/auth.php';

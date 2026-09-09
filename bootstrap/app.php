@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // ATV 21: Alias para o Middleware de perfil de usuário
+        $middleware->alias([
+            'perfil' => \App\Http\Middleware\VerificarPerfil::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
