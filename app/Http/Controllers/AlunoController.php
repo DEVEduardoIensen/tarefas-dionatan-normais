@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AlunoRequest;
 use App\Models\Aluno;
 
 class AlunoController extends Controller
@@ -22,17 +23,10 @@ class AlunoController extends Controller
         return view('alunos.create');
     }
 
-    // 3. Salvar um novo aluno no banco
-    public function store(Request $request)
+    // 3. Salvar um novo aluno no banco com validação (ATV 15)
+    public function store(AlunoRequest $request)
     {
-        $dadosValidados = $request->validate([
-            'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:alunos,email',
-            'curso' => 'required|string|max:255',
-            'data_nascimento' => 'nullable|date',
-        ]);
-
-        Aluno::create($dadosValidados);
+        Aluno::create($request->validated());
 
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
     }
@@ -51,19 +45,11 @@ class AlunoController extends Controller
         return view('alunos.edit', compact('aluno'));
     }
 
-    // 6. Atualizar os dados do aluno no banco
-    public function update(Request $request, string $id)
+    // 6. Atualizar os dados do aluno no banco com validação (ATV 15)
+    public function update(AlunoRequest $request, string $id)
     {
         $aluno = Aluno::findOrFail($id);
-
-        $dadosValidados = $request->validate([
-            'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:alunos,email,' . $aluno->id,
-            'curso' => 'required|string|max:255',
-            'data_nascimento' => 'nullable|date',
-        ]);
-
-        $aluno->update($dadosValidados);
+        $aluno->update($request->validated());
 
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno atualizado com sucesso!');
     }
