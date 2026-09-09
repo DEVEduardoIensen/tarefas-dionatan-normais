@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 // Página Inicial
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/home', function () {
     return view('home');
