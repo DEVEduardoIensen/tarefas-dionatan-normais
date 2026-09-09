@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         // Chama o seeder de alunos (ATV 12)
         $this->call(AlunoSeeder::class);
+        $this->call(CursoSeeder::class);
     }
 }

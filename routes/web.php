@@ -67,5 +67,14 @@ Route::prefix('consultas/alunos')->group(function () {
     });
 });
 
+// TEMA 9 / DESAFIO: Rota para exibir todos os alunos vinculados a um curso
+use App\Models\Curso;
+
+Route::get('/cursos/{id}/alunos', function ($id) {
+    $curso = Curso::with('alunos')->findOrFail($id);
+    return view('cursos.alunos', compact('curso'));
+})->name('cursos.alunos');
+
+
 
 
