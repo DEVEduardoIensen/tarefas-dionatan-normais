@@ -38,4 +38,34 @@ Route::get('/usuario/{id}', function ($id) {
     return "Visualizando Usuário com ID: {$id}";
 });
 
+// TEMA 5 / ATV 11: Consultas com Eloquent
+use App\Models\Aluno;
+
+Route::prefix('consultas/alunos')->group(function () {
+    // 1. Alunos de determinado curso
+    Route::get('/curso/{curso}', function ($curso) {
+        $alunos = Aluno::doCurso($curso)->get();
+        return response()->json($alunos);
+    });
+
+    // 2. Alunos cujo nome contém determinada palavra
+    Route::get('/nome/{termo}', function ($termo) {
+        $alunos = Aluno::nomeContem($termo)->get();
+        return response()->json($alunos);
+    });
+
+    // 3. Alunos cadastrados recentemente
+    Route::get('/recentes', function () {
+        $alunos = Aluno::recentes()->get();
+        return response()->json($alunos);
+    });
+
+    // 4. Quantidade de alunos
+    Route::get('/quantidade', function () {
+        $quantidade = Aluno::quantidadeTotal();
+        return "Quantidade total de alunos cadastrados: {$quantidade}";
+    });
+});
+
+
 

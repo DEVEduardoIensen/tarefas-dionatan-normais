@@ -19,5 +19,31 @@ class Aluno extends Model
         'curso',
         'data_nascimento',
     ];
+
+    // ATV 11: Consultas no Eloquent
+
+    // 1. Alunos de determinado curso
+    public function scopeDoCurso($query, $curso)
+    {
+        return $query->where('curso', $curso);
+    }
+
+    // 2. Alunos cujo nome contém determinada palavra
+    public function scopeNomeContem($query, $termo)
+    {
+        return $query->where('nome', 'like', "%{$termo}%");
+    }
+
+    // 3. Alunos cadastrados recentemente
+    public function scopeRecentes($query, $limite = 5)
+    {
+        return $query->latest()->take($limite);
+    }
+
+    // 4. Quantidade de alunos
+    public static function quantidadeTotal()
+    {
+        return self::count();
+    }
 }
 
