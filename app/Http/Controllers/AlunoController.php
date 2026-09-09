@@ -11,7 +11,14 @@ class AlunoController extends Controller
     // 1. Listar todos os alunos
     public function index()
     {
-        return view('alunos.index');
+        // Dados de exemplo para demonstrar @if e @foreach nas views
+        $alunos = [
+            ['id' => 1, 'nome' => 'Ana Silva', 'curso' => 'Engenharia de Software'],
+            ['id' => 2, 'nome' => 'Carlos Santos', 'curso' => 'Análise e Desenvolvimento de Sistemas'],
+            ['id' => 3, 'nome' => 'Beatriz Lima', 'curso' => 'Ciência da Computação'],
+        ];
+
+        return view('alunos.index', compact('alunos'));
     }
 
     // 2. Formulário para criar novo aluno

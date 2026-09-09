@@ -61,6 +61,9 @@
             <h1>@yield('title', 'Sistema de Gestão de Alunos')</h1>
         </header>
 
+        {{-- Menu de navegação compartilhado por todas as views --}}
+        @include('compartilhado.menu')
+
         <main>
             @yield('content')
         </main>
