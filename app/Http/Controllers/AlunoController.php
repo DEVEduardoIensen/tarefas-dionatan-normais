@@ -11,13 +11,13 @@ class AlunoController extends Controller
     // 1. Listar todos os alunos
     public function index()
     {
-        return 'Página de Listagem de Alunos (index)';
+        return view('alunos.index');
     }
 
     // 2. Formulário para criar novo aluno
     public function create()
     {
-        return 'Formulário de Cadastro de Aluno (create)';
+        return view('alunos.create');
     }
 
     // 3. Salvar novo aluno no banco de dados
@@ -29,13 +29,13 @@ class AlunoController extends Controller
     // 4. Exibir detalhes de um aluno específico
     public function show(string $id)
     {
-        return "Exibindo detalhes do Aluno ID: {$id} (show)";
+        return view('alunos.show', ['id' => $id]);
     }
 
     // 5. Formulário para editar um aluno existente
     public function edit(string $id)
     {
-        return "Formulário de Edição do Aluno ID: {$id} (edit)";
+        return view('alunos.edit', ['id' => $id]);
     }
 
     // 6. Atualizar os dados do aluno no banco de dados
